@@ -46,18 +46,14 @@
   }
 }
 
+img {
+  width: 100px;
+  height: 100px;
+}
 
 section {
   width: 30%;
   height: 100%;
-}
-
-.yelp {
-  background-color: lightgreen;
-}
-
-.weather {
-  background-color: lightblue;
 }
 
 .pokemon {
