@@ -23,13 +23,19 @@ function App() {
   return (
     <section className='pokemon'>
       <form onSubmit={handlePokemonSubmit}>
-        Search pokemon for a city
+        Search for a Pokemon
         <input value={name} onChange={e => setName(e.target.value)}/>
         <button>Get pokemon</button>
       </form>
       <div className='list'>
         { 
-          pokemonSearch.map(pokemon => <div key={pokemon.id}>  <p>{pokemon.pokemon} {pokemon.type_1}/{pokemon.type_2}</p> </div>)
+          pokemonSearch.map(pokemon =>
+            <div key={pokemon.id}>
+              <img src={pokemon.url_image} />
+              <p>{pokemon.pokemon}</p>
+              <p> {pokemon.type_1}/{pokemon.type_2}</p>
+              <p> Species #{pokemon.species_id}</p>
+            </div>)
         }
       </div>
     </section>
