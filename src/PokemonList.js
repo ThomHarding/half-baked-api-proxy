@@ -1,7 +1,6 @@
 import Pokemon from './Pokemon';
 
 export default function PokemonList(pokemonList) {
-    
   return (
     <div className='list'>
       { 

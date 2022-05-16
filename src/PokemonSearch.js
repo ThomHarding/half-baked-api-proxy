@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Spinner from './Spinner';
 import PokemonList from './PokemonList';
 import { getPokemon } from './services/fetch-utils';
@@ -11,22 +11,30 @@ export default function PokemonSearch() {
   const [state, setState] = useState('');
       // you'll need to track your pokemon search results, the loading state, and one form field: name. For this form field, set a real initial values (like 'pikachu') so the form populates with a default value.
 
+  async function load() {
+    const { data: { results } } = await getPokemon(name);
+    setPokemonSearch(results);
+    console.log(results);
+        // put the jsonified data in state and set the loading state to false
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    load();
+      }, []); // eslint-disable-line
+
   async function handlePokemonSubmit(e) {
     e.preventDefault();
-      
-        // set the loading state to true
+    // set the loading state to true
     setLoading(true);
-        // use fetch to make a request to your netlify pokemon function. Be sure to pass the pokemon name as a query param in the URL
-    const { data: { results } } = await getPokemon(name);
-        // put the jsonified data in state and set the loading state to false
-    setPokemonSearch(results);
-    setLoading(false);
+    // use fetch to make a request to your netlify pokemon function. Be sure to pass the pokemon name as a query param in the URL
+    load();
   }
       
   return (
     <section className='pokemon'>
       {/* make the fetch on submit */}
-      <form onSubmit={handlePokemonSubmit()}>
+      <form onSubmit={handlePokemonSubmit}>
         Search pokemon for a city
         <input value={name} onChange={e => setName(e.target.value)}/>
         <input value={state} onChange={e => setCountry(e.target.value)}/>
@@ -34,7 +42,7 @@ export default function PokemonSearch() {
         {/* add inputs/labels for city name, state, and country, using all the things we need with react forms. Don't forget to use the value property to sync these up with the default values in react state */}
         <button>Get pokemon</button>
       </form>
-      ({loading} ? <PokemonList pokemonList={pokemonSearch}/> : <Spinner />)
+      {/* ({loading} ? <PokemonList pokemonList={pokemonSearch}/> : <Spinner />) */}
       {/* Make a PokemonList component to import and use here. Use a ternary to display a loading spinner (make a <Spinner /> component for this) if the data is still loading. */}
     </section>
   );
